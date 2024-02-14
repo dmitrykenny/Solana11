@@ -1,0 +1,112 @@
+Project Installed solana:
+
+CMD - anchor-clu 0.28.0
+solana-cli 1.16.13 (src:b2a65f38; feat:39467787,
+client:SolanaLabs)
+
+NEXT
+CD solana-nft anchor
+code .
+cargo add anchor-lang --features=init-if-needed
+
+
+cargo add anchor-spl --features=metada
+
+
+use anchor_lang::prelude::*;
+
+declare_id!
+("8SEtKW982AVyRmQzgyMz8Gpg7WJxJ3ZUVZnaDSJqWM"); //the program id
+
+#[program]
+pub mod solana_nft_anchor {
+  use super::*;
+
+  pub fn initilialize(ctx: Context<Initialize>) ->
+  Result<()> {
+      Ok(())
+}
+}
+
+#[derive(Accounts)]
+pub struct initialize {}
+
+
+// snip
+
+#[derive(Accounts)]
+pub struct InitNFT<'info> {
+/// CHECK: Ok, let's go
+ourselves 
+#[account(mut, signer)]
+signer: AccountInfo<'info>
+}
+
+
+use anchor_spl::token::Mint;
+// snip
+
+#[derive(Accounts)]
+pub struct initNFT<'info> {
+
+    /// CHECK: OK, let's go
+#[account (mut, signer)]
+signer: AccountInfo<'info>,
+#[account]
+  init,
+  payer = signer,
+  mint::decimals = 0,
+  mint::authority = signer.key(),
+  mint::freeze_authority = signer.key(),
+  )]
+  mint: Account <'info, Mint>,
+}
+
+use anchor_lang::prelude::*;
+use anchor_spl::{
+assosiated_token::AssosiatedToken,
+token::{Mint, Token, TokenAccount},
+};
+
+// snip 
+#[derive(Accounts)]
+pub struct InitNFT<'info> {
+  /// CHEK: Okey, we are checked
+  #[account(mut,signer)]
+  pub signer: AccountInfo<'info>,
+#[account(
+init,
+payer = signer,
+mint::decimals = 0,
+mint::authority = signer.key(),
+mint:: freeze_authority = siger.key(),
+)]
+pub mint: Account<'info, mint>< // new
+  #[account(
+  init_if_needed,
+  payer = signer,
+  assosiated_token::mint = mint,
+  assosiated_token::authority = siger,
+  )]
+
+  pub assosiated_token: Account<'info, TokenAccount> // new
+pub system_program: Program<'info, system>m // bew
+  pub rent: Sysvar <'info, rent> // new
+}
+pub fn init_nft(ctx:context<INITNFT) -> Result<()> {
+//  create mint account
+let cpi+context = CpiContext::new{
+ctx.accounts.token_program,to_account_info(),
+MintTo {
+mint:
+ctx.account.mint.to_account_info(),
+    to:
+ctx.accounts.assosiated_token_account.to_account_info(),
+authority:
+ctx.accounts.signer.to_account_info(),
+          },
+        };
+    mint_to(cpi_context, 1) ?;
+  Ok(())
+}
+
